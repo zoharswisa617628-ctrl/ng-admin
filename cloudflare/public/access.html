@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>הרשאות · New Gamers Admin</title>
+<style>
+:root { color-scheme: dark; --bg:#0b0f17; --card:#121826; --line:#1f2a3d; --text:#e8eef9; --text2:#9fb0c8; --accent:#2ad0f5; --ok:#34d399; --bad:#f87171; }
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--bg); color: var(--text); font: 15px/1.55 system-ui, "Segoe UI", sans-serif; }
+main { max-width: 52rem; margin: 0 auto; padding: 24px 16px 60px; }
+a { color: var(--accent); }
+h1 { font-size: 1.5rem; margin: 0 0 .3rem; letter-spacing: -.01em; }
+.sub { color: var(--text2); margin: 0 0 1.4rem; }
+.card { background: var(--card); border: 1px solid var(--line); border-radius: 18px; padding: 1.1rem 1.2rem; margin-bottom: 1rem; }
+.card h2 { font-size: 1rem; margin: 0 0 .25rem; }
+.card p.h { color: var(--text2); font-size: .85rem; margin: 0 0 .9rem; }
+.add { display: grid; grid-template-columns: 1.3fr 1fr auto auto; gap: .5rem; }
+@media (max-width: 40rem) { .add { grid-template-columns: 1fr 1fr; } }
+input, select { width: 100%; padding: .6rem .75rem; border-radius: 10px; border: 1px solid var(--line); background: #0d1320; color: var(--text); font: inherit; }
+input.ltr { direction: ltr; text-align: right; font-family: ui-monospace, Consolas, monospace; }
+button { padding: .6rem 1rem; border-radius: 10px; border: 1px solid var(--line); background: #1a2334; color: var(--text); font: inherit; font-weight: 600; cursor: pointer; }
+button:active { transform: scale(.97); }
+button.ok { background: rgba(52,211,153,.14); border-color: rgba(52,211,153,.45); color: var(--ok); }
+button.bad { background: rgba(248,113,113,.12); border-color: rgba(248,113,113,.45); color: var(--bad); }
+button.sm { padding: .3rem .65rem; font-size: .8rem; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem; padding: .6rem 0; border-top: 1px solid var(--line); }
+.row:first-child { border-top: 0; }
+.row .who { flex: 1; min-width: 10rem; }
+.row .who b { display: block; }
+.row .who span { color: var(--text2); font-size: .8rem; direction: ltr; unicode-bidi: isolate; }
+.tag { font-size: .75rem; font-weight: 700; padding: .15rem .55rem; border-radius: 999px; }
+.tag.allow { background: rgba(52,211,153,.14); color: var(--ok); }
+.tag.deny { background: rgba(248,113,113,.14); color: var(--bad); }
+.tag.in { background: rgba(42,208,245,.12); color: var(--accent); }
+.tag.out { background: rgba(159,176,200,.12); color: var(--text2); }
+.tag.own { background: rgba(251,191,36,.14); color: #fbbf24; }
+.empty { color: var(--text2); font-size: .9rem; }
+.top { display: flex; justify-content: space-between; align-items: center; gap: 1rem; margin-bottom: 1rem; }
+.msg { min-height: 1.4em; font-size: .85rem; color: var(--text2); margin-top: .5rem; }
+.hist-pick { display: flex; gap: .5rem; margin-bottom: .6rem; }
+.hist-pick select { max-width: 18rem; }
+.vsum { display: flex; flex-wrap: wrap; gap: .6rem; margin-bottom: .9rem; }
+.vsum div { flex: 1; min-width: 7rem; background: #0d1320; border: 1px solid var(--line); border-radius: 12px; padding: .6rem .8rem; }
+.vsum b { display: block; font-size: 1.4rem; color: var(--accent); }
+.vsum span { color: var(--text2); font-size: .8rem; }
+.vbars { display: flex; align-items: flex-end; gap: 3px; height: 90px; direction: ltr; margin-bottom: .9rem; }
+.vbars i { flex: 1; min-height: 3px; background: var(--accent); border-radius: 3px 3px 0 0; opacity: .85; }
+.vbars i.z { background: var(--line); }
+</style>
+</head>
+<body>
+<main>
+  <div class="top"><a href="/">→ חזרה לאתר</a><a href="/auth/logout">התנתקות</a></div>
+  <h1>מי נכנס לאתר</h1>
+  <p class="sub">כל מי שיש לו את רול ההנהלה בשרת נכנס לבד. כאן מוסיפים חריגים: לתת גישה למישהו בלי הרול, או לחסום מישהו למרות שיש לו אותו. חסימה וניתוק פועלים מיד.</p>
+
+  <section class="card">
+    <h2>הוספת חריג</h2>
+    <p class="h">Discord ID: קליק ימני על המשתמש בדיסקורד ← Copy User ID</p>
+    <div class="add">
+      <input class="ltr" id="nid" inputmode="numeric" placeholder="Discord ID" aria-label="Discord ID">
+      <input id="nnote" placeholder="הערה (לא חובה)" aria-label="הערה">
+      <button class="ok" data-add="allow">לתת גישה</button>
+      <button class="bad" data-add="deny">לחסום</button>
+    </div>
+    <div class="msg" id="msg" role="status"></div>
+  </section>
+
+  <section class="card">
+    <h2>כניסות לאתר</h2>
+    <p class="h">30 הימים האחרונים. "אנשים" זה כמה אנשים שונים נכנסו באותו יום, "פתיחות" זה כמה פעמים נפתח האתר. הספירה התחילה מהרגע שהוספנו אותה.</p>
+    <div id="vsum" class="vsum"></div><div id="vbars" class="vbars" aria-label="כניסות לפי יום"></div><div id="vppl"></div>
+  </section>
+
+  <section class="card"><h2>חריגים</h2><div id="ex"><p class="empty">טוען…</p></div></section>
+  <section class="card"><h2>מי התחבר לאחרונה</h2><p class="h">כולל מי שניסה ולא קיבל גישה. "ניתוק" מוציא אותו מכל המכשירים עכשיו.</p><div id="us"><p class="empty">טוען…</p></div></section>
+
+  <section class="card">
+    <h2>גיבויים</h2>
+    <p class="h">כל שינוי בנתונים המשותפים שומר את הגרסה הקודמת ל־14 יום. אם משהו נמחק או נהרס, אפשר להחזיר.</p>
+    <div class="hist-pick">
+      <select id="hkey" aria-label="איזה נתונים">
+        <option value="ng_staff">הצוות</option><option value="ng_tenders">מכרזים</option><option value="ng_tender_owners">בעלי עסקים</option>
+        <option value="ng_resets">איפוסי טראסט</option><option value="ng_act">פעילות</option><option value="ng_log">יומן פעולות</option>
+        <option value="ng_mins">מינימום</option><option value="ng_nick">שמות ידניים</option><option value="ng_tender_batch">הודעת מכרזים</option><option value="ng_claims">מי לוקח מה</option><option value="ng_pnotes">הערות ההנהלה על הצוות</option><option value="ng_talks">שיחות צוות</option>
+        <option value="ng_act_imp">מתי עודכנה פעילות</option><option value="ng_staff_meta">פרטי עדכון הצוות</option><option value="ng_alias">שמות מהטבלאות</option>
+      </select>
+      <button id="hload">הצג גרסאות</button>
+    </div>
+    <div id="hist"></div>
+    <div class="msg" id="hmsg" role="status"></div>
+  </section>
+</main>
+<script src="/access.js"></script>
+</body>
+</html>

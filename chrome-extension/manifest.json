@@ -1,0 +1,13 @@
+{
+  "manifest_version": 3,
+  "name": "NG Admin · סנכרון צוות",
+  "version": "1.0",
+  "description": "מעדכן לבד את רשימת הצוות ב-NG Admin מאתר הצוות, כשהדפדפן הזה מחובר לשני האתרים.",
+  "permissions": ["alarms", "storage"],
+  "host_permissions": [
+    "https://staff.example.com/*",
+    "https://YOUR-PROJECT.pages.dev/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "action": { "default_popup": "popup.html", "default_title": "סנכרון צוות NG" }
+}

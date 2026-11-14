@@ -1,0 +1,25 @@
+# New Gamers Admin on Cloudflare Pages (free plan)
+name = "ng-admin"
+pages_build_output_dir = "public"
+compatibility_date = "2025-01-01"
+
+[vars]
+# From the Discord Developer Portal → your application → OAuth2
+DISCORD_CLIENT_ID = "YOUR_DISCORD_APP_ID"
+# The New Gamers Discord server ID (right-click the server icon → Copy Server ID)
+# Discord app public key (public value): checks that /discord/interactions requests really come from Discord
+DISCORD_PUBLIC_KEY = "YOUR_DISCORD_APP_PUBLIC_KEY"
+GUILD_ID = "YOUR_GUILD_ID"
+# The management role ID(s); several are separated by commas (Server Settings → Roles → right-click → Copy Role ID)
+ROLE_IDS = "YOUR_MANAGEMENT_ROLE_ID"
+# Discord IDs that always get in and can manage the exceptions page
+OWNER_IDS = "YOUR_DISCORD_USER_ID"
+# Phone notifications: public signing key (the private one is the secret VAPID_PRIVATE)
+VAPID_PUBLIC = "YOUR_VAPID_PUBLIC_KEY"
+VAPID_SUBJECT = "https://YOUR-PROJECT.pages.dev"
+# Secrets (NOT here): DISCORD_CLIENT_SECRET and SESSION_SECRET, set with `wrangler pages secret put`
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ng-admin"
+database_id = "YOUR_D1_DATABASE_ID"

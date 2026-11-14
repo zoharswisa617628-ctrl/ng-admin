@@ -1,0 +1,24 @@
+# secrets and local state: never commit these
+.dev.vars
+.env
+.env.*
+*.pem
+*.key
+node_modules/
+.wrangler/
+.claude/
+.agents/
+.codex/
+
+# build output (made by cloudflare/build.ps1) and local assets
+cloudflare/public/app.js
+cloudflare/public/boot.js
+cloudflare/public/img.js
+cloudflare/public/index.html
+cloudflare/public/designs/
+cloudflare/public/ev/
+cloudflare/public/*.png
+cloudflare/public/*.webp
+cloudflare/assets/
+*.zip
+*.exe

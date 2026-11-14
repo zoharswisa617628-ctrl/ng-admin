@@ -1,0 +1,19 @@
+# Background job: phone notifications for New Gamers Admin (runs every 30 minutes)
+name = "ng-admin-cron"
+main = "index.js"
+compatibility_date = "2025-01-01"
+workers_dev = false
+
+[triggers]
+crons = ["*/30 * * * *"]
+
+[vars]
+VAPID_PUBLIC = "YOUR_VAPID_PUBLIC_KEY"
+VAPID_SUBJECT = "https://YOUR-PROJECT.pages.dev"
+OWNER_IDS = "YOUR_DISCORD_USER_ID"
+# Secret (not here): VAPID_PRIVATE
+
+[[d1_databases]]
+binding = "DB"
+database_name = "ng-admin"
+database_id = "YOUR_D1_DATABASE_ID"
